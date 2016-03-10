@@ -6,34 +6,30 @@ class strStr {
      * @param target string containing the sequence of characters to match.
      */
     public int strStr(String source, String target) {
-        //write your code here
+        //kmp implementation
         if (source == null || target == null || (source.length() - target.length() <0))  {
             return -1;
         }
-        for (int m = 0; m <= source.length() - target.length(); m++ ) {
-            if ((source != null) && (target.length() == 0)) {
-                return m;
+        int i = 0;
+        int j = 0;
+        while (i < source.length()  && j < target.length() ) {
+            if (source.charAt(i) == target.charAt(j) ) {
+                i ++;
+                j ++;
             }
-
-            for (int i = 0; i < target.length(); i++) {
-                if ( (source.charAt(m + i) == target.charAt(i)) && (i == target.length() - 1)) {
-                    return m;
-                }
-                if ( (source.charAt(m + i) == target.charAt(i)) && (i <= target.length() - 1)) {
-                    
-                    continue;
-                }
-                else{
-                    //System.out.println(m);
-                    break;
-                }
+            else {
+                i = i - j +1;
+                j = 0;
+                //System.out.println("i= "+i);
             }
-
         }
-        return -1;
+        if (j == target.length()) 
+            return i - j; 
+        else
+            return -1;
     }
     public static void main(String[] args){
         strStr s = new  strStr();
-        System.out.println(s.strStr(null,""));
+        System.out.println(s.strStr("lintcode","lintcode"));
     }
 }
